@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NeuraOne Buddy Mode Control Room</title>
+<style>
+  body {
+    margin: 0; padding: 0;
+    background: #0a0a1a;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #99aaff;
+    overflow: hidden;
+  }
+  header {
+    background: #1b1b3d;
+    padding: 1rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    box-shadow: 0 0 10px #4b4b8f;
+  }
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    height: calc(100vh - 70px);
+  }
+  .control-panel {
+    background: rgba(20, 20, 50, 0.9);
+    border-radius: 1rem;
+    box-shadow: 0 0 30px #6c6cff;
+    width: 90%;
+    max-width: 900px;
+    padding: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+  .panel {
+    background: #29295c;
+    border-radius: 1rem;
+    box-shadow: 0 0 15px #7a7aff;
+    flex: 1 1 250px;
+    padding: 1rem;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  .panel:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px #b0b0ff;
+  }
+  .panel h3 {
+    margin-bottom: 1rem;
+  }
+  .welcome-message {
+    margin-bottom: 1rem;
+    font-style: italic;
+    color: #a0aaff;
+  }
+  .orb-animation {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1rem;
+    background: radial-gradient(circle, #7b4bff 30%, #3f1a7e 80%);
+    border-radius: 50%;
+    box-shadow: 0 0 30px #9a7fff;
+    animation: pulseGlow 3s infinite alternate;
+  }
+  @keyframes pulseGlow {
+    0% { box-shadow: 0 0 20px #9a7fff; }
+    100% { box-shadow: 0 0 40px #c0aaff; }
+  }
+  .footer {
+    margin-top: auto;
+    font-size: 0.8rem;
+    color: #6666aa;
+    text-align: center;
+    padding: 0.5rem;
+  }
+</style>
+</head>
+<body>
+<header>NeuraOne Buddy Mode Control Room</header>
+<main>
+  <div class="orb-animation"></div>
+  <div class="welcome-message">Welcome back, Commander Anjaneyulu. NeuraOne Control Room is now online.</div>
+  <div class="control-panel">
+    <div class="panel" onclick="alert('NeuraBoost: AI performance boost tools coming soon!')">
+      <h3>NeuraBoost</h3>
+      <p>Enhance AI speed and response.</p>
+    </div>
+    <div class="panel" onclick="alert('StealthOps: Privacy tools under development.')">
+      <h3>StealthOps</h3>
+      <p>Manage privacy and stealth modes.</p>
+    </div>
+    <div class="panel" onclick="alert('Core Override: Advanced control coming soon.')">
+      <h3>Core Override</h3>
+      <p>Override AI core settings.</p>
+    </div>
+  </div>
+  <div class="footer">© 2025 NeuraOne AI HQ - Confidential</div>
+</main>
+</body>
+</html>

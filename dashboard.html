@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NeuraOne Dashboard</title>
+<style>
+  body {
+    margin: 0; padding: 0;
+    background: linear-gradient(135deg, #1a1a3f, #4b1a7e);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #ddd;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: center;
+  }
+  header {
+    padding: 1rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 0 10px #6c4bff;
+    background: rgba(10,10,30,0.9);
+  }
+  main {
+    flex: 1;
+    width: 100%;
+    max-width: 1000px;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  .card {
+    background: rgba(20,20,50,0.85);
+    border-radius: 1rem;
+    box-shadow: 0 0 15px #6c4bff;
+    width: 280px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  .card:hover {
+    transform: scale(1.05);
+  }
+  .card h2 {
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+  }
+  .orb-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, #7b4bff 30%, #3f1a7e 80%);
+    border-radius: 50%;
+    box-shadow: 0 0 25px #9a7fff;
+    cursor: pointer;
+    animation: pulseGlow 3s infinite alternate;
+  }
+  @keyframes pulseGlow {
+    0% { box-shadow: 0 0 20px #9a7fff; }
+    100% { box-shadow: 0 0 40px #c0aaff; }
+  }
+  .tagline {
+    margin-top: 1rem;
+    font-style: italic;
+    color: #c0aaff;
+    text-align: center;
+  }
+  /* Responsive */
+  @media (max-width: 700px) {
+    main {
+      flex-direction: column;
+      align-items: center;
+    }
+    .card {
+      width: 80%;
+    }
+  }
+</style>
+</head>
+<body>
+<header>NeuraOne Dashboard</header>
+<main>
+  <div class="card" id="chatCard">
+    <h2>AI Chat Assistant 🤖</h2>
+    <p>Chat with our AI for help, ideas, and more.</p>
+  </div>
+  <div class="card" id="toolsCard">
+    <h2>AI Tool Hub 🛠️</h2>
+    <p>Image generation, text tools, and more.</p>
+  </div>
+  <div class="card" id="searchCard">
+    <h2>AI Knowledge Search 🔍</h2>
+    <p>Find answers with instant smart summaries.</p>
+  </div>
+</main>
+<div class="orb-container" title="NeuraOne AI Orb"></div>
+<div class="tagline">Your All-in-One AI for Chat, Tools & Knowledge</div>
+
+<script>
+  // Orb animation and Buddy Mode unlock
+  const orb = document.querySelector('.orb-container');
+  let clickCount = 0;
+  let timer;
+
+  orb.addEventListener('click', () => {
+    clickCount++;
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      clickCount = 0;
+    }, 1500);
+    if(clickCount === 5) {
+      alert('Buddy Mode unlocked! Welcome to your secret control room.');
+      // Redirect to Buddy Mode control room
+      window.location.href = 'buddy_mode.html';
+    }
+  });
+
+  // Card click handlers (demo)
+  document.getElementById('chatCard').addEventListener('click', () => {
+    alert('AI Chat Assistant will open here soon!');
+  });
+  document.getElementById('toolsCard').addEventListener('click', () => {
+    alert('AI Tool Hub coming soon!');
+  });
+  document.getElementById('searchCard').addEventListener('click', () => {
+    alert('AI Knowledge Search coming soon!');
+  });
+</script>
+</body>
+</html>
