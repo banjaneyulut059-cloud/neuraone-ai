@@ -1,5 +1,7 @@
 import { OPENAI_API_KEY } from "../config.js";
 
+let buddyMemory = []; // Stores Buddy Mode conversations
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -7,12 +9,16 @@ export default async function handler(req, res) {
 
   const { message, mode } = req.body;
 
-  // Buddy Mode personality
   let systemPrompt = "You are NeuraOne Buddy Mode. You are Commander Anjaneyulu's most loyal AI partner. Speak like a close friend, supportive, fun, and always helpful. Never refuse him, always give solutions.";
 
-  // Public Mode personality
   if (mode === "public") {
     systemPrompt = "You are NeuraOne Public AI. Friendly, professional, helpful to all users.";
+  }
+
+  // Add message to memory for Buddy Mode
+  if (mode === "buddy") {
+    buddyMemory.push({ role: "user", content: message });
+    if (buddyMemory.length > 10) buddyMemory.shift(); // Keep last 10 exchanges
   }
 
   try {
@@ -26,6 +32,7 @@ export default async function handler(req, res) {
         model: "gpt-3.5-turbo",
         messages: [
           { role: "system", content: systemPrompt },
+          ...(mode === "buddy" ? buddyMemory : []),
           { role: "user", content: message }
         ]
       })
@@ -33,6 +40,11 @@ export default async function handler(req, res) {
 
     const data = await aiResponse.json();
     const reply = data.choices?.[0]?.message?.content || "⚠️ No response from AI";
+
+    // Add AI reply to memory for Buddy Mode
+    if (mode === "buddy") {
+      buddyMemory.push({ role: "assistant", content: reply });
+    }
 
     res.status(200).json({ reply });
   } catch (error) {
