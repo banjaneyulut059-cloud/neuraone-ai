@@ -1,6 +1,6 @@
 import { OPENAI_API_KEY } from "../config.js";
 
-let buddyMemory = []; // Stores Buddy Mode conversations
+let buddyMemory = [];
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -9,20 +9,18 @@ export default async function handler(req, res) {
 
   const { message, mode } = req.body;
 
-  let systemPrompt = "You are NeuraOne Buddy Mode. You are Commander Anjaneyulu's most loyal AI partner. Speak like a close friend, supportive, fun, and always helpful. Never refuse him, always give solutions.";
-
-  if (mode === "public") {
-    systemPrompt = "You are NeuraOne Public AI. Friendly, professional, helpful to all users.";
+  let systemPrompt = "You are NeuraOne Public AI. Be helpful, clear, and professional.";
+  if (mode === "buddy") {
+    systemPrompt = "You are NeuraOne Buddy Mode. Speak like Commander’s loyal AI partner, supportive, fun, and remembering his last 10 messages.";
   }
 
-  // Add message to memory for Buddy Mode
   if (mode === "buddy") {
     buddyMemory.push({ role: "user", content: message });
-    if (buddyMemory.length > 10) buddyMemory.shift(); // Keep last 10 exchanges
+    if (buddyMemory.length > 10) buddyMemory.shift();
   }
 
   try {
-    const aiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
+    const aiRes = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${OPENAI_API_KEY}`,
@@ -38,16 +36,15 @@ export default async function handler(req, res) {
       })
     });
 
-    const data = await aiResponse.json();
-    const reply = data.choices?.[0]?.message?.content || "⚠️ No response from AI";
+    const data = await aiRes.json();
+    const reply = data.choices?.[0]?.message?.content || "No response from AI";
 
-    // Add AI reply to memory for Buddy Mode
     if (mode === "buddy") {
       buddyMemory.push({ role: "assistant", content: reply });
     }
 
     res.status(200).json({ reply });
-  } catch (error) {
-    res.status(500).json({ error: "AI connection failed", details: error.message });
+  } catch (err) {
+    res.status(500).json({ error: "AI connection failed", details: err.message });
   }
 }
