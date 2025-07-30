@@ -1,0 +1,31 @@
+body {
+  background: linear-gradient(135deg, #000000, #001f3f);
+  color: #00ffea;
+  font-family: monospace;
+  text-align: center;
+}
+h1 {
+  margin-top: 20px;
+  animation: glow 2s infinite alternate;
+}
+@keyframes glow {
+  from { text-shadow: 0 0 10px cyan; }
+  to { text-shadow: 0 0 20px #00ffea; }
+}
+textarea {
+  width: 80%;
+  margin-top: 20px;
+  height: 60px;
+}
+button {
+  margin-top: 10px;
+  background: #00ffea;
+  color: black;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+#buddyOutput {
+  margin-top: 20px;
+  min-height: 150px;
+}
