@@ -1,24 +1,82 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>NeuraOne - Public AI</title>
+  <title>NeuraOne V1.5 Command Center</title>
   <style>
-    body { background: #0a0a0a; color: #e0e0e0; font-family: Arial; text-align: center; padding: 20px; }
-    .container { background: #1a1a1a; padding: 20px; border-radius: 10px; width: 90%; max-width: 600px; margin: auto; box-shadow: 0 0 15px #00ffe0; }
-    input { width: 80%; padding: 10px; margin-top: 10px; background: #111; color: white; border: 1px solid #00ffe0; }
+    body { background: #0a0a0a; color: #e0e0e0; font-family: Arial; padding: 20px; text-align: center; }
+    .tab { cursor: pointer; padding: 10px; margin: 5px; background: #1a1a1a; border-radius: 5px; display: inline-block; }
+    .tab:hover { background: #333; }
+    .active { background: #00ffe0; color: black; }
+    .container { background: #111; padding: 20px; border-radius: 10px; width: 90%; max-width: 600px; margin: auto; box-shadow: 0 0 15px #00ffe0; }
+    input { width: 80%; padding: 10px; margin-top: 10px; background: #000; color: white; border: 1px solid #00ffe0; }
     button { padding: 10px; margin-top: 10px; background: #00ffe0; color: black; border: none; cursor: pointer; }
     button:hover { background: #00b3a0; }
     .chat { text-align: left; margin-top: 20px; }
     .message { margin-bottom: 10px; }
+    .hidden { display: none; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>NeuraOne Public AI</h1>
-    <div class="chat" id="chatOutput"></div>
-    <input id="userInput" placeholder="Type your message..." />
-    <button onclick="sendMessage()">Send</button>
+  <h1>NeuraOne Command Center V1.5</h1>
+  
+  <div>
+    <span class="tab active" id="tabPublic" onclick="switchMode('public')">🌐 Public Mode</span>
+    <span class="tab" id="tabBuddy" onclick="switchMode('buddy')">🤖 Buddy Mode</span>
   </div>
-  <script src="script.js"></script>
+  
+  <div class="container" id="publicContainer">
+    <h2>Public AI</h2>
+    <div class="chat" id="publicChat"></div>
+    <input id="publicInput" placeholder="Type message..." />
+    <button onclick="sendMessage('public')">Send</button>
+  </div>
+
+  <div class="container hidden" id="buddyContainer">
+    <h2>Buddy Mode</h2>
+    <div class="chat" id="buddyChat"></div>
+    <input id="buddyInput" placeholder="Commander, type your command..." />
+    <button onclick="sendMessage('buddy')">Send</button>
+  </div>
+
+  <script>
+    function switchMode(mode) {
+      document.getElementById("tabPublic").classList.remove("active");
+      document.getElementById("tabBuddy").classList.remove("active");
+      document.getElementById("publicContainer").classList.add("hidden");
+      document.getElementById("buddyContainer").classList.add("hidden");
+
+      if (mode === 'public') {
+        document.getElementById("tabPublic").classList.add("active");
+        document.getElementById("publicContainer").classList.remove("hidden");
+      } else {
+        document.getElementById("tabBuddy").classList.add("active");
+        document.getElementById("buddyContainer").classList.remove("hidden");
+      }
+    }
+
+    async function sendMessage(mode) {
+      const inputEl = mode === 'public' ? document.getElementById("publicInput") : document.getElementById("buddyInput");
+      const chatEl = mode === 'public' ? document.getElementById("publicChat") : document.getElementById("buddyChat");
+
+      const msg = inputEl.value.trim();
+      if (!msg) return;
+
+      chatEl.innerHTML += `<div class="message"><b>You:</b> ${msg}</div>`;
+
+      try {
+        const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: msg, mode })
+        });
+        const data = await res.json();
+        chatEl.innerHTML += `<div class="message"><b>AI:</b> ${data.reply}</div>`;
+      } catch {
+        chatEl.innerHTML += `<div class="message" style="color:red;"><b>Error:</b> AI not responding</div>`;
+      }
+
+      inputEl.value = "";
+    }
+  </script>
 </body>
 </html>
