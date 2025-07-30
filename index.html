@@ -1,27 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>NeuraOne V1.5</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <title>NeuraOne - Public AI</title>
+  <style>
+    body { background: #0a0a0a; color: #e0e0e0; font-family: Arial; text-align: center; padding: 20px; }
+    .container { background: #1a1a1a; padding: 20px; border-radius: 10px; width: 90%; max-width: 600px; margin: auto; box-shadow: 0 0 15px #00ffe0; }
+    input { width: 80%; padding: 10px; margin-top: 10px; background: #111; color: white; border: 1px solid #00ffe0; }
+    button { padding: 10px; margin-top: 10px; background: #00ffe0; color: black; border: none; cursor: pointer; }
+    button:hover { background: #00b3a0; }
+    .chat { text-align: left; margin-top: 20px; }
+    .message { margin-bottom: 10px; }
+  </style>
 </head>
 <body>
-  <div class="header">
-    <h1>Welcome to NeuraOne V1.5</h1>
-    <p>Your personal AI platform is online, Commander.</p>
-  </div>
-
-  <div class="chat-container">
-    <textarea id="userInput" placeholder="Type your message..."></textarea>
+  <div class="container">
+    <h1>NeuraOne Public AI</h1>
+    <div class="chat" id="chatOutput"></div>
+    <input id="userInput" placeholder="Type your message..." />
     <button onclick="sendMessage()">Send</button>
-    <div id="chatOutput"></div>
   </div>
-
-  <div style="text-align:center; margin-top:20px;">
-    <a href="commander.html" style="color:cyan;">Enter Buddy Mode</a>
-  </div>
-
   <script src="script.js"></script>
 </body>
 </html>
