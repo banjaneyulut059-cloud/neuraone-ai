@@ -4,7 +4,7 @@ async function sendMessage() {
 
   if (!input) return;
 
-  output.innerHTML += `<p><strong>You:</strong> ${input}</p>`;
+  output.innerHTML += `<div class="message"><b>You:</b> ${input}</div>`;
 
   try {
     const res = await fetch("/api/chat", {
@@ -12,11 +12,10 @@ async function sendMessage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: input, mode: "public" })
     });
-
     const data = await res.json();
-    output.innerHTML += `<p><strong>AI:</strong> ${data.reply}</p>`;
-  } catch (error) {
-    output.innerHTML += `<p style="color:red;"><strong>Error:</strong> Could not reach AI.</p>`;
+    output.innerHTML += `<div class="message"><b>AI:</b> ${data.reply}</div>`;
+  } catch {
+    output.innerHTML += `<div class="message" style="color:red;"><b>Error:</b> AI not responding</div>`;
   }
 
   document.getElementById("userInput").value = "";
