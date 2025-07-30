@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Buddy Mode - Commander Access</title>
-  <link rel="stylesheet" href="commander-theme.css">
+  <title>NeuraOne - Buddy Mode</title>
+  <style>
+    body { background: #000; color: #00ffb3; font-family: Arial; text-align: center; padding: 20px; }
+    .container { background: #111; padding: 20px; border-radius: 10px; width: 90%; max-width: 600px; margin: auto; box-shadow: 0 0 15px #00ffb3; }
+    input { width: 80%; padding: 10px; margin-top: 10px; background: #000; color: #00ffb3; border: 1px solid #00ffb3; }
+    button { padding: 10px; margin-top: 10px; background: #00ffb3; color: black; border: none; cursor: pointer; }
+    button:hover { background: #00cc88; }
+    .chat { text-align: left; margin-top: 20px; }
+    .message { margin-bottom: 10px; }
+  </style>
 </head>
 <body>
-  <audio id="startup" src="assets/commander-startup.mp3" autoplay></audio>
-  <h1>Welcome, Commander Anjaneyulu</h1>
-  <p>Mission Status: All systems operational.</p>
-  
-  <textarea id="buddyInput" placeholder="Enter command..."></textarea>
-  <button onclick="sendBuddyCommand()">Execute</button>
-  <div id="buddyOutput"></div>
-  
+  <div class="container">
+    <h1>Commander Buddy Mode</h1>
+    <div class="chat" id="buddyOutput"></div>
+    <input id="buddyInput" placeholder="Commander, type your command..." />
+    <button onclick="sendBuddyMessage()">Send</button>
+  </div>
   <script src="commander.js"></script>
 </body>
 </html>
