@@ -4,7 +4,7 @@ async function sendBuddyMessage() {
 
   if (!input) return;
 
-  output.innerHTML += `<p><strong>Commander:</strong> ${input}</p>`;
+  output.innerHTML += `<div class="message"><b>Commander:</b> ${input}</div>`;
 
   try {
     const res = await fetch("/api/chat", {
@@ -12,11 +12,10 @@ async function sendBuddyMessage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: input, mode: "buddy" })
     });
-
     const data = await res.json();
-    output.innerHTML += `<p><strong>Buddy:</strong> ${data.reply}</p>`;
-  } catch (error) {
-    output.innerHTML += `<p style="color:red;"><strong>Error:</strong> Buddy AI connection failed.</p>`;
+    output.innerHTML += `<div class="message"><b>Buddy:</b> ${data.reply}</div>`;
+  } catch {
+    output.innerHTML += `<div class="message" style="color:red;"><b>Error:</b> Buddy offline</div>`;
   }
 
   document.getElementById("buddyInput").value = "";
