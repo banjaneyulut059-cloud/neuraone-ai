@@ -1,2 +1,1 @@
-// API Key Configuration (replace with real key when ready)
-export const OPENAI_API_KEY = "YOUR_OPENAI_KEY_HERE";
+export const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
