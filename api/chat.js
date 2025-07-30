@@ -5,7 +5,15 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { message } = req.body;
+  const { message, mode } = req.body;
+
+  // Buddy Mode personality
+  let systemPrompt = "You are NeuraOne Buddy Mode. You are Commander Anjaneyulu's most loyal AI partner. Speak like a close friend, supportive, fun, and always helpful. Never refuse him, always give solutions.";
+
+  // Public Mode personality
+  if (mode === "public") {
+    systemPrompt = "You are NeuraOne Public AI. Friendly, professional, helpful to all users.";
+  }
 
   try {
     const aiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -16,7 +24,10 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model: "gpt-3.5-turbo",
-        messages: [{ role: "user", content: message }]
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: message }
+        ]
       })
     });
 
